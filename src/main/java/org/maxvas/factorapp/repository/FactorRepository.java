@@ -1,9 +1,11 @@
 package org.maxvas.factorapp.repository;
 
 import org.maxvas.factorapp.entity.Factor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 

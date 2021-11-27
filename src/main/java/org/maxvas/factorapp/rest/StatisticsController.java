@@ -19,13 +19,13 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping(value = "/")
-    public List<Statistics> findAll(){
+    public List<Statistics> findAll() {
         return statisticsService.findAll();
     }
 
     @PutMapping(value = "/{word}")
-    public String addStatistics(String word){
-        CompletableFuture<Void> completableFuture = CompletableFuture.runAsync( () ->
+    public String addStatistics(String word) {
+        CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() ->
                 statisticsService.calculateStatistics(word));
         return "Process started";
     }
