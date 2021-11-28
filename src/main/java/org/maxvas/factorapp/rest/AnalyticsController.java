@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class AnalyticsController {
 
-    final ArticleRepository articleRepository;
+    private final ArticleRepository articleRepository;
 
     @GetMapping(value = "/test")
-    public String test(){
+    public String test() {
         return "Analytics controller test";
     }
 
     @GetMapping(value = "/count")
-    public String count(){
+    public String count() {
         return "Articles count: ".concat(String.valueOf(articleRepository.count()));
     }
 

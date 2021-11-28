@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    ports:
+      - "8080:8080"
+    environment:
+      - newscharturi=mongodb://mongodatabase:27017/newsChartsDb?readPreference=primary&directConnection=true&ssl=false
+    networks:
+      - nw
+  mongodatabase:
+    image: mongo:bionic
+    ports:
+      - "27018:27017"
+    # Подгружаем данные newsChartsDb из дампа, чтобы можно было тестировать с данными.
+    volumes:
+      - ./dump:/dump
+      - ./mongorestore.sh:/docker-entrypoint-initdb.d/mongorestore.sh
+    networks:
+      - nw
+networks:
+  nw:
