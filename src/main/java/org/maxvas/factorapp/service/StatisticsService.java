@@ -71,5 +71,4 @@ public class StatisticsService {
         return statisticsRepository.findAll();
     }
 
-
 }

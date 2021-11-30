@@ -3,14 +3,12 @@ package org.maxvas.factorapp.rest;
 import lombok.AllArgsConstructor;
 import org.maxvas.factorapp.entity.Statistics;
 import org.maxvas.factorapp.service.StatisticsService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/statistics")
 @AllArgsConstructor
