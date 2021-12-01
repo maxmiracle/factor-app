@@ -13,6 +13,9 @@ management:
     health:
         defaults:
             enabled: true
+        diskspance.enabled: false
+        circuitbreakers.enabled: true
+        ratelimiters.enabled: true
     metrics:
         export:
             prometheus:
@@ -23,3 +26,81 @@ management:
 logging:
     file:
         name: logfile.log
+
+resilience4j.circuitbreaker:
+    configs:
+        default:
+            registerHealthIndicator: true
+            slidingWindowSize: 10
+            minimumNumberOfCalls: 5
+            permittedNumberOfCallsInHalfOpenState: 3
+            automaticTransitionFromOpenToHalfOpenEnabled: true
+            waitDurationInOpenState: 5s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10
+            recordExceptions:
+                - org.springframework.web.client.HttpServerErrorException
+                - java.util.concurrent.TimeoutException
+                - java.io.IOException
+        shared:
+            slidingWindowSize: 100
+            permittedNumberOfCallsInHalfOpenState: 30
+            waitDurationInOpenState: 1s
+            failureRateThreshold: 50
+            eventConsumerBufferSize: 10
+    instances:
+        factorService:
+            baseConfig: default
+
+resilience4j.retry:
+    configs:
+        default:
+            maxAttempts: 3
+            waitDuration: 100
+            retryExceptions:
+                - org.springframework.web.client.HttpServerErrorException
+                - java.util.concurrent.TimeoutException
+                - java.io.IOException
+    instances:
+        factorService:
+            baseConfig: default
+
+resilience4j.bulkhead:
+    configs:
+        default:
+            maxConcurrentCalls: 100
+    instances:
+        factorService:
+            maxConcurrentCalls: 10
+
+
+resilience4j.thread-pool-bulkhead:
+    configs:
+        default:
+            maxThreadPoolSize: 4
+            coreThreadPoolSize: 2
+            queueCapacity: 2
+    instances:
+        factorService:
+            baseConfig: default
+
+resilience4j.ratelimiter:
+    configs:
+        default:
+            registerHealthIndicator: false
+            limitForPeriod: 3
+            limitRefreshPeriod: 30s
+            timeoutDuration: 0
+            eventConsumerBufferSize: 100
+    instances:
+        factorService:
+            baseConfig: default
+
+resilience4j.timelimiter:
+    configs:
+        default:
+            cancelRunningFuture: false
+            timeoutDuration: 1350ms
+    instances:
+        factorService:
+            baseConfig: default
