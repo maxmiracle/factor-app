@@ -1,4 +1,4 @@
 FROM openjdk:11-jre-slim
-COPY /target/factor-app-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY /build/libs/factor-app*.jar /app/app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
