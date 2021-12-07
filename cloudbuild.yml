@@ -11,6 +11,6 @@ steps:
 # deploy run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
-    args: ['run', 'deploy', 'news-logic', '--image', 'gcr.io/$PROJECT_ID/news-logic:$COMMIT_SHA', '--region', 'global']
+    args: ['run', 'deploy', 'factor-app', '--image', 'gcr.io/$PROJECT_ID/news-logic:$COMMIT_SHA', '--region', 'global']
 images:
   - gcr.io/$PROJECT_ID/news-logic:$COMMIT_SHA
