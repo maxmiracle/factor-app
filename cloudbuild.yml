@@ -1,0 +1,10 @@
+steps:
+# Build application jar by java 11
+  - name: gradle:7.3.1-jdk11-alpine
+    entrypoint: gradle
+    args: ['bootJar']
+# build Dockerfile
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/optical-country-334214/news-logic-image', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/optical-country-334214/news-logic-image']
