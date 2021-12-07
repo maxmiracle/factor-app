@@ -5,6 +5,12 @@ steps:
     args: ['bootJar']
 # build Dockerfile
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/optical-country-334214/news-logic-image', '.']
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/news-logic:$COMMIT_SHA', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/optical-country-334214/news-logic-image']
+    args: ['push', 'gcr.io/$PROJECT_ID/news-logic:$COMMIT_SHA']
+# deploy run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: ['run', 'deploy', 'news-logic', '--image', 'gcr.io/$PROJECT_ID/news-logic:$COMMIT_SHA', '--region', 'global']
+images:
+  - gcr.io/$PROJECT_ID/news-logic:$COMMIT_SHA
