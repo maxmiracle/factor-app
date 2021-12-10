@@ -1,6 +1,5 @@
-package org.maxvas.batchnews.entity;
+package org.maxvas.factorapp.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -2,18 +2,17 @@ package org.maxvas.factorapp.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.maxvas.batchnews.entity.Article;
-import org.maxvas.factorapp.entity.Factor;
-import org.maxvas.factorapp.entity.Stat;
+import org.maxvas.factorapp.entity.Article;
 import org.maxvas.factorapp.entity.Statistics;
 import org.maxvas.factorapp.repository.ArticleRepository;
 import org.maxvas.factorapp.repository.FactorRepository;
 import org.maxvas.factorapp.repository.StatisticsRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
@@ -40,32 +39,32 @@ public class StatisticsService {
         try {
             while (articleIterator.hasNext()) {
                 Article article = articleIterator.next();
-                createFactor(article, word, statisticsId);
+                //createFactor(article, word, statisticsId);
             }
         } finally {
 
         }
     }
 
-    @Transactional
-    public void createFactor(Article article, String word, String statisticsId) {
-        Optional<Factor> optionalFactor = factorRepository.findByArticleId(article.get_id());
-        long count = StringUtils.countOccurrencesOf(article.getText(), word);
-        Stat stat = new Stat();
-        stat.setCount(count);
-        Factor factor;
-        if (optionalFactor.isPresent()) {
-            factor = optionalFactor.get();
-            factor.getStats().put(statisticsId, stat);
-        } else {
-            factor = new Factor();
-            factor.setArticleId(article.get_id());
-            factor.setDate(article.getDate());
-            factor.setLink(article.getLink());
-            factor.setStats(Map.of(statisticsId, stat));
-        }
-        factorRepository.save(factor);
-    }
+//    @Transactional
+//    public void createFactor(Article article, String word, String statisticsId) {
+//        Optional<Factor> optionalFactor = factorRepository.findByArticleId(article.get_id());
+//        long count = StringUtils.countOccurrencesOf(article.getText(), word);
+//        Stat stat = new Stat();
+//        stat.setCount(count);
+//        Factor factor;
+//        if (optionalFactor.isPresent()) {
+//            factor = optionalFactor.get();
+//            factor.getStats().put(statisticsId, stat);
+//        } else {
+//            factor = new Factor();
+//            factor.setArticleId(article.get_id());
+//            factor.setDate(article.getDate());
+//            factor.setLink(article.getLink());
+//            factor.setStats(Map.of(statisticsId, stat));
+//        }
+//        factorRepository.save(factor);
+//    }
 
     public List<Statistics> findAll() {
         return statisticsRepository.findAll();

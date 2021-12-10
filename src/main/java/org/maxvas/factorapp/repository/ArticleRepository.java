@@ -1,6 +1,6 @@
 package org.maxvas.factorapp.repository;
 
-import org.maxvas.batchnews.entity.Article;
+import org.maxvas.factorapp.entity.Article;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -4,8 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
-import java.util.Map;
+import java.util.Date;
 
 @Document(collection = "factors")
 @Data
@@ -14,23 +13,24 @@ public class Factor {
     private String id;
 
     /**
-     * Идентификтор Article._id
-     */
-    private String articleId;
-
-    /**
-     * Дата публикации.
-     */
-    private LocalDate date;
-
-    /**
      * Ссылка на статью.
      */
     private String link;
 
+    /**
+     * Дата публикации.
+     */
+    private Date articleDate;
 
     /**
-     * Данные по статистикам
+     * Дата создания записи
      */
-    private Map<String, Stat> stats;
+    private Date createDate;
+
+    /**
+     * Core NLP analysis
+     */
+    CoreNLPArticleStatistics coreNLPArticleStatistics;
+
+
 }
