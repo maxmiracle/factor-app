@@ -50,7 +50,7 @@ public class ListArticlesService {
      * @param link url, содержащая дату в пути.
      * @return
      */
-    public static LocalDate getDateFromLink(String link) {
+    public static LocalDate getDateFromLink(String link, LocalDate alternateDate) {
         try {
             String regexp = "^.*/([^/]*)/([^/]*)/([^/]*)/.*$";
             Pattern p = Pattern.compile(regexp);
@@ -67,7 +67,7 @@ public class ListArticlesService {
         catch (Exception ex)
         {
             log.warn("Wrong link format", ex);
-            return null;
+            return alternateDate;
         }
     }
 

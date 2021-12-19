@@ -1,6 +1,9 @@
 package org.maxvas.factorapp;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.maxvas.factorapp.common.DateRange;
 import org.maxvas.factorapp.config.ArticleProcessConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDate;
 
 @SpringBootTest
+@Slf4j
 class FactorApplicationTests {
 
     private final static LocalDate dateToIndex = LocalDate.of(2014, 1, 1);
@@ -32,4 +36,16 @@ class FactorApplicationTests {
 //        LocalDate date = LocalDate.parse(String.join("/", year, mon.substring(0, 1).toUpperCase() + mon.substring(1), dayOfMonth), urlPartFormatter);
 //    }
 
+
+    @SneakyThrows
+    @Test
+    void processArticleForMonth(){
+        LocalDate startDate = LocalDate.of(2021, 01, 01);
+        LocalDate endDate = LocalDate.of(2021, 12, 16);
+        log.info("start process");
+        for (LocalDate d : new DateRange(startDate, endDate)){
+            articleIndexer.indexArticle(d);
+        }
+        log.info("finish process");
+    }
 }

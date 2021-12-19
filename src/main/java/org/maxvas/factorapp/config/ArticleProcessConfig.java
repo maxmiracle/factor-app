@@ -34,19 +34,17 @@ public class ArticleProcessConfig {
 
     private final FactorRepository factorRepository;
 
+    private static final String NEWS_DATE_HEADER = "newsDate";
+    private static final String LINK_HEADER = "link";
+
     @Bean
     public IntegrationFlow articles() {
         return flow -> flow
-                .enrichHeaders(h -> h.headerFunction("newsDate", message -> message.getPayload()))
+                .enrichHeaders(h -> h.headerFunction(NEWS_DATE_HEADER, message -> message.getPayload()))
                 .<LocalDate, List<String>>transform(date -> listArticlesService.getLinksByDate(date))
                 .split()
-//                .<Message, Message>transform(Message.class, message -> {
-//                    return MutableMessageBuilder.fromMessage(message)
-//                            .setHeader(MessageHeaders.ID, UUID.randomUUID())
-//                            .build();
-//                })
-                .enrichHeaders(h -> h.headerFunction("link", message -> message.getPayload()))
-                .enrichHeaders(h -> h.headerFunction(HEADER_DATE_FROM_LINK, message -> ListArticlesService.getDateFromLink((String) message.getPayload())))
+                .enrichHeaders(h -> h.headerFunction(LINK_HEADER, message -> message.getPayload()))
+                .enrichHeaders(h -> h.headerFunction(HEADER_DATE_FROM_LINK, message -> ListArticlesService.getDateFromLink((String) message.getPayload(), (LocalDate) message.getHeaders().get(NEWS_DATE_HEADER))))
                 .<String, ArticleData>transform(link -> theGuardianArticleService.getArticleData(link))
                 .<ArticleData>filter(p -> p.isSuccess())
                 .<ArticleData>filter(p -> Objects.isNull(factorRepository.findByLink(p.getLink())))

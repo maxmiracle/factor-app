@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-integration'
     implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework:spring-aspects'
     implementation 'org.jsoup:jsoup:1.14.3'
     implementation 'io.micrometer:micrometer-registry-prometheus:1.7.5'
     implementation 'org.apache.commons:commons-lang3'
@@ -57,5 +58,5 @@ tasks.withType(JavaCompile) {
 
 test {
     minHeapSize = "128m" // initial heap size
-    maxHeapSize = "1200m" // maximum heap size
+    maxHeapSize = "2900m" // maximum heap size
 }

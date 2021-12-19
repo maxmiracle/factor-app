@@ -1,7 +1,9 @@
 spring:
     data:
         mongodb:
-            uri: ${newscharturi}
+            uri: ${NEWSCHARTURI}
+        rest:
+           base-path: /api
 management:
     endpoints:
         web:
@@ -23,3 +25,6 @@ management:
 logging:
     file:
         name: logfile.log
+retry:
+    maxAttempts: 3
+    maxDelay: 30000
